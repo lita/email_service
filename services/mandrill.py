@@ -1,18 +1,23 @@
+import os
 import requests
 import json
 
-import config
 from services import BaseService
 from services import EmailServiceException, EmailServiceResponseException
+from services import MissingEnvironments
 
-url = config.MANDRILL_API_URL
-api_key = config.MANDRILL_API_KEY
+url = os.environ.get("MANDRILL_API_URL")
+api_key = os.environ.get("MANDRILL_API_KEY")
 
 
 class MandrillService(BaseService):
 
     def __init__(self):
         self._name = "Mandrill"
+        if not url or not api_key:
+            raise MissingEnvironments(("Mandrill: Either MANDRILL_API_URL, "
+                                       "and/or MANDRILL_API_KEY are "
+                                       "not set in your environments"))
 
     @property
     def name(self):
@@ -32,6 +37,10 @@ class MandrillService(BaseService):
                                                 resp.text, self.name)
 
     def send(self, to=None, from_email=None, subject='', text='', **kwargs):
+        """
+        Sends the email through Mandrill. Other keys not listed in the
+        arguments are ignored.
+        """
         self._validate_email(to, from_email)
         to = [{'email': email} for email in to]
         msg = {
@@ -58,4 +67,3 @@ class MandrillService(BaseService):
         except KeyError:
             return EmailServiceException(response.status_code,
                                          response.text, self.name)
-

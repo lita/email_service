@@ -64,6 +64,20 @@ class TestMandrill(unittest.TestCase):
         mock.post.assert_called_with(mandrill.url + '/messages/send',
                                      data=json.dumps(expected))
 
+    @patch("services.mandrill.requests")
+    def test_multple_args(self, mock):
+        mock.post.request_value = FakeResponse(200, "Sent")
+        message = {
+            'to': ['sender@example.com'],
+            'from_email': 'fake@example.com',
+            'subject': 'test',
+            'text': 'This is a message',
+            'header': 'Should be ignored',
+            'image': 'Should be ignored'
+        }
+        self.mandrill.send(**message)
+        self.assertTrue(mock.post.called)
+
 
 class TestMailgunService(unittest.TestCase):
 

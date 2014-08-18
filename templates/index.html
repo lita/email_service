@@ -4,27 +4,37 @@
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
+     <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+
     <!-- Latest compiled and minified CSS -->
     <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">
 
     <!-- Optional theme -->
     <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap-theme.min.css">
 
+    <link rel="stylesheet" href="{{ url_for('static', filename='email.css') }}">
+
     <!-- Latest compiled and minified JavaScript -->
     <script src="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
+
   </head>
   <body>
+    <div class="email_form">
      <form method="post" action="/email/api/1.0/send">
-        <label>To:<input name="to" type="email" required></label>
-        <label>From:<input name="from_email" type="email" required></label>
-        <label>cc:<input name="cc" type="email" ></label>
-        <label>bcc:<input name="bcc" type="email" ></label>
-        <p><label>Subject:</label><input name="subject" type="text"></p>
-        <p><label>Message:</label><textarea name="text" row=10 cols=40></textarea></p>
+        <div>
+        <label>To:</label>
+        <input class="email_headers" name="to" type="email" required>
+        </div>
+        <div>
+        <label>From:</label><input name="from_email" class="email_headers" type="email" required>
+        </div>
+        <p><label>Subject:</label><input class="email_headers"  name="subject" type="text"></p>
+        <label class="email_message">Message:</label>
+        <textarea name="text" row=50 cols=40></textarea>
         <input type="submit" value="Send!">
+     </div>
     </form>
 
-    <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
   </body>
 </html>

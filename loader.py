@@ -34,7 +34,8 @@ def get_random_email_service():
     Gives an random emial service object. This method returns the instantiated
     object.
     """
+    __load_email_services()
+    if not email_services:
+        return None
     email_service_class = random.choice(email_services)
     return email_service_class()
-
-__load_email_services()

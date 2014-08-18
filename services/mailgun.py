@@ -1,7 +1,8 @@
+import os
 import requests
 
-import config
-from services import BaseService, EmailServiceResponseException
+from services import BaseService
+from services import EmailServiceResponseException, MissingEnvironments
 
 
 class MailgunService(BaseService):
@@ -22,12 +23,17 @@ class MailgunService(BaseService):
         self._name = value
 
     def initalize_and_format_domain_and_url(self):
-        self.url = config.MAILGUN_API_URL
-        self.api_key = config.MAILGUN_API_KEY
-        domain = config.MAILGUN_DOMAIN
-        domain = domain.strip('/')
-        domain = domain.replace('https://', '').replace('http://', '')
-        self.domain = domain
+        self.url = os.environ.get("MAILGUN_API_URL")
+        self.api_key = os.environ.get("MAILGUN_API_KEY")
+        domain = os.environ.get("MAILGUN_DOMAIN")
+        if self.url and self.api_key and domain:
+            domain = domain.strip("/")
+            domain = domain.replace("https://", "").replace("http://", "")
+            self.domain = domain
+        else:
+            raise MissingEnvironments(("Mailgun: Either MAILGUN_API_URL, "
+                                       "MAILGUN_API_URL and/or MAILGUN_DOMAIN "
+                                       "are not set in your environments"))
 
     def ping(self):
         resp = self.__session.get("%s/domains/%s" % (self.url, self.domain))

@@ -52,6 +52,10 @@ class EmailServiceResponseException(EmailServiceException):
         self.args = ("Response Status %d" % code, service_name, msg)
 
 
+class MissingEnvironments(EmailServiceException):
+    pass
+
+
 class MissingSender(EmailServiceException):
     pass
 
