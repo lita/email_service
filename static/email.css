@@ -1,0 +1,30 @@
+.email_form {
+    margin: 0 auto;
+}
+
+.email_headers {
+    padding-
+}
+
+.email_labels {
+    float: left;
+    width: 30%;
+}
+
+.email_message {
+    float: left;
+}
+
+label {
+    display: inline-block;
+    width: 140px;
+    text-align: right;
+}​
+
+textarea {
+    display: inline-block;
+    height: 200px;
+    width: 200px
+    font-size:14pt;
+    text-align: right;
+}
