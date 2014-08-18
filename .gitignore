@@ -2,3 +2,4 @@
 uber-env
 .DS_Store
 *.rdb
+config.py
