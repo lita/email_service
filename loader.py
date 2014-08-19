@@ -17,20 +17,19 @@ def __load_email_services():
     """
     if email_services:
         return
-    service_dir = path('services')
-    for f in service_dir.files():
-        if f.endswith('.py'):
-            module_name = f.splitext()[0].replace('/', '.')
-            try:
-                module = importlib.import_module(module_name)
-            except ImportError:
-                logger.debug("Failed to load %s" % f)
-                continue
-            classes = inspect.getmembers(module, inspect.isclass)
-            for cls_name, cls_object in classes:
-                if (issubclass(cls_object, services.BaseService) and
-                   not inspect.isabstract(cls_object)):
-                    email_services.append(cls_object)
+    python_files = [py for py in path('services').files() if py.endswith('py')]
+    for python_file in python_files:
+        module_name = python_file.splitext()[0].replace('/', '.')
+        try:
+            module = importlib.import_module(module_name)
+        except ImportError:
+            logger.debug("Failed to load %s" % python_file)
+            continue
+        classes = inspect.getmembers(module, inspect.isclass)
+        for cls_name, cls_object in classes:
+            if (issubclass(cls_object, services.BaseService) and
+               not inspect.isabstract(cls_object)):
+                email_services.append(cls_object)
 
 
 def get_random_email_service():
