@@ -32,14 +32,13 @@ def send_email():
         return(str(err), 400)
     try:
         task = tasks.send_mail.delay(request.form.to_dict())
-        email_service = task.get(timeout=5)
-        return ("Email was sent by %s" % email_service)
+        email_result = task.get(timeout=5)
     except (MissingRecipient, MissingSender) as err:
         return (str(err), 400)
     except TimeoutError:
         return ("Email is queued", 200)
 
-    return ("%s sent your email!" % email_service, 200)
+    return (email_result, 200)
 
 
 def check_form_values():

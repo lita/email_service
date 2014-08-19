@@ -1,5 +1,6 @@
 from celery import Celery
 from celery.utils.log import get_task_logger
+from validate_email import validate_email
 
 
 import loader
@@ -12,8 +13,10 @@ logger = get_task_logger(__name__)
 
 @app.task(bind=True)
 def send_mail(self, email_dict):
-    emails = email_dict['to']
-    email_dict['to'] = [email.strip() for email in emails.split(',')]
+    emails, bad_emails = validate_emails(email_dict["to"])
+    if not emails or not validate_email(email_dict["from_email"]):
+        return "Email wasn't formatted properly."
+    email_dict["to"] = emails
     email_service = loader.get_random_email_service()
     logger.info("Got %s email service" % email_service.name)
     try:
@@ -26,4 +29,16 @@ def send_mail(self, email_dict):
         logger.debug("Failed. Got a response error. Trying again...")
         raise self.retry(exc=exc)
 
-    return email_service.name
+    result = "Using %s, sent to %s." % (email_service.name, ", ".join(emails))
+    if bad_emails:
+        result += "Falied to send to %s" % ", ".join(bad_emails)
+    return result
+
+
+def validate_emails(emails_to_parse):
+    emails, bad_emails = [], []
+    for email in emails_to_parse.split(','):
+        email = email.strip()
+        target = emails if validate_email(email) else bad_emails
+        target.append(email)
+    return emails, bad_emails

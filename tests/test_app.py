@@ -40,3 +40,4 @@ class TestFlaskApp(unittest.TestCase):
         mock_tasks.send_mail.delay.return_value = FakeTask()
         app.send_email()
         self.assertTrue(mock_tasks.send_mail.delay.called)
+        self.assertTrue(mock_form_values.called)

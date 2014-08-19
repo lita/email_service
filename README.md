@@ -25,6 +25,7 @@ I also pretend to be a JavaScript Developer, especially when I go to hackathons.
 - Mailgun
 - Mandrill
 - Heroku
+- validate_email - Python library to validate emails.
 
 I was not familiar with Heroku, Celery or the email APIs before this project. I have tried setting up a page using Amazing EC2 servers. I like Heroku way more.
 

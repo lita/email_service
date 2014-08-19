@@ -16,4 +16,5 @@ path.py==5.2
 pytz==2014.4
 redis==2.10.3
 requests==2.3.0
+validate-email==1.2
 wsgiref==0.1.2
