@@ -77,6 +77,9 @@ You must send it with the following names or else your email won't send:
 - `subject`: Subject
 - `text`: Body of the message
 
+##Added a new email service!
+Adding a new email service is easy! All you need to do is extend the `BaseService` class and implement the abstract methods; ping, send and name. Make sure it is one `.py` file and it lives in the `services` folder. Then the system will automatically load it up and randomly choose that service to send emails.
+
 ##Architecture and Design
 I knew the bottle neck would be making the request to the various email APIs and waiting for a response. So I did the following:
 
