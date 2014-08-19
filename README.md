@@ -53,15 +53,11 @@ I was not familiar with Heroku, Celery or the email APIs before this project. I 
 
 4. Here are the commands to launch `celery` and `flask` app!
 
-  ```
-  $ celery -A tasks worker --loglevel=info
-  ```
+  `$ celery -A tasks worker --loglevel=info`
 
   Then run the Flask app!
 
-  ```
-  $ python app.py
-  ```
+  `$ python app.py`
 
   If you want to run it in production, you should run it with gunicorn.
 
