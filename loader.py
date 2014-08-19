@@ -11,6 +11,10 @@ logger = get_task_logger(__name__)
 
 
 def __load_email_services():
+    """
+    Loads all the modules within the service module and finds classes that are
+    a subclass of BaseService. Creates a list of email services.
+    """
     if email_services:
         return
     service_dir = path('services')

@@ -43,6 +43,9 @@ def send_email():
 
 
 def check_form_values():
+    """
+    Determines if the post request has all the data needed to send the email
+    """
     for key in email_format.iterkeys():
         if key not in request.form:
             raise InvalidFormError("Attribute, %s, invalid post data" % key)
