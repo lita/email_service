@@ -1,7 +1,7 @@
 #Email Service
 This was created for the Uber coding challenge. I choose the Email Service project, following the back-end track.
 
-You can see this project live at http://email.litacho.com.
+You can see this project live at http://mail.litacho.com.
 
 ##My Background
 I am very familiar with the Python language. I spent 3.5 years writing pipeline tools for Dreamworks Animation before going to Hacker School. I am currently interning for GNOME's Outreach for Women program, contributing to CPython full-time.
@@ -71,8 +71,8 @@ All you need to do is make a post request to the following url.
 `http://mail.litacho.com/email/api/1.0/send`
 
 You must send it with the following names or else your email won't send:
-- `to`: Sender's email
-- `from_email`: Recipient's email
+- `to`: Recipient's email. This can be a comma-delimited list (student@example.com, what@example.com).
+- `from_email`: Sender's email
 - `subject`: Subject
 - `text`: Body of the message
 
