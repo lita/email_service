@@ -47,7 +47,7 @@ I was not familiar with Heroku, Celery or the email APIs before this project. I 
   MAILGUN_API_KEY=[your API key]
   MAILGUN_DOMAIN=[your domain name registerd with Mailgun]
 
-  # RabbitMQ and Redis. This assume you are running them locally.
+  # RabbitMQ and Redis. This assumes you are running them locally.
   CLOUDAMQP_URL=amqp://guest@localhost/
   REDISTOGO_URL=redis://localhost:6379/0
   ```
