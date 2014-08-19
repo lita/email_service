@@ -1,4 +1,4 @@
-import celery
+from celery.exceptions import TimeoutError
 from flask import Flask, render_template, request
 
 
@@ -36,7 +36,7 @@ def send_email():
         return ("Email was sent by %s" % email_service)
     except (MissingRecipient, MissingSender) as err:
         return (str(err), 400)
-    except celery.exceptions.TimeoutError:
+    except TimeoutError:
         return ("Email is queued", 200)
 
     return ("%s sent your email!" % email_service, 200)

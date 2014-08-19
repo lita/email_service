@@ -85,9 +85,9 @@ I knew the bottle neck would be making the request to the various email APIs and
 `tasks.py` - This chooses a random email service and sends off the data.
 
 ###Email services
-`services` - This has an abstract class, called `BaseService`, that all email service interfaces must subclass. If a developer wanted to add a new email service, they need to inherit this class and implement `ping`, and `send`.
+`services` - This has an abstract class, called `BaseService`, that all email service interfaces must subclass. If a developer wanted to add a new email service, they need to inherit this class and implement `ping`, `name` (which is the name of the service), and `send`. I have implemented `service.mandrill` and `service.mailgun` that subclass `BaseService` and interfaces with their respective APIs.
 
-`loader.py` - this looks through the `services` folder and finds any classes that subclasses `BaseService` and creates a list of available services. Then `tasks.send_mail` selects a random email service from that list.
+`loader.py` - this looks through the `services` folder and finds any classes that inherits from `BaseService` and creates a list of available services. Then `tasks.send_mail` selects a random email service from that list.
 
 ###Pros
 *Abstraction* - This system separates parsing the web request and sending out the email. Thus if one email service went down, the system is able to retry with a different email service.
@@ -99,3 +99,6 @@ I knew the bottle neck would be making the request to the various email APIs and
 
 ##TODOs
 - Use webhooks to notify the user if the email has been sent.
+- Validate email. Currently, I allow multiple email address for the 'To' field. Right now, I am letting API handle the call.
+- Handle bcc and cc.
+- Add integration tests.
