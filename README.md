@@ -51,7 +51,7 @@ CLOUDAMQP_URL=amqp://guest@localhost/
 REDISTOGO_URL=redis://localhost:6379/0
 ```
 
-3. Now you need to launch celery and flask, and you should be good to go!
+4. Now you need to launch celery and flask, and you should be good to go!
 ```
 $ celery -A tasks worker --loglevel=info
 ```
@@ -62,9 +62,10 @@ $ python app.py
 ```
 
 If you want to run it in production, you should run it with gunicorn.
+
 `$ gunicorn app:app --log-file=-`
 
-4. If you are using foreman, you can store your environment variables in your virtual environment and run `foreman start`.
+5. If you are using foreman, you can store your environment variables in your virtual environment and run `foreman start`. This project has a Procfile all set up for you.
 
 ##Front-end Usage
 All you need to do is make a post request to the following url.
