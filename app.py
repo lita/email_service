@@ -3,7 +3,6 @@ from flask import Flask, render_template, request
 
 
 import tasks
-from services import MissingSender, MissingRecipient
 
 app = Flask(__name__)
 
@@ -27,30 +26,29 @@ def render_index():
 @app.route("/email/api/1.0/send", methods=["POST"])
 def send_email():
     try:
-        check_form_values()
+        request_data = request.form.to_dict()
+        check_form_values(request_data)
     except InvalidFormError as err:
         return(str(err), 400)
     try:
-        task = tasks.send_mail.delay(request.form.to_dict())
+        task = tasks.send_mail.delay(request_data)
         email_result = task.get(timeout=5)
-    except (MissingRecipient, MissingSender) as err:
-        return (str(err), 400)
     except TimeoutError:
         return ("Email is queued", 200)
 
     return (email_result, 200)
 
 
-def check_form_values():
+def check_form_values(request_data):
     """
     Determines if the post request has all the data needed to send the email
     """
     for key in email_format.iterkeys():
-        if key not in request.form:
+        if key not in request_data:
             raise InvalidFormError("Attribute, %s, invalid post data" % key)
-        if not isinstance(request.form[key], email_format[key]["type"]):
+        if not isinstance(request_data[key], email_format[key]["type"]):
             raise InvalidFormError("Attribute, %s, was not a string." % key)
-        if email_format[key]["required"] and not request.form[key]:
+        if email_format[key]["required"] and not request_data[key]:
             raise InvalidFormError("Attribute, %s, cannot be blank." % key)
 
 if __name__ == "__main__":

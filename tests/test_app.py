@@ -5,13 +5,12 @@ import app
 
 
 class TestFlaskApp(unittest.TestCase):
-    @patch("app.request")
-    def test_check_form_values(self, mock):
+
+    def test_check_form_values(self):
         form = {
             "to": "test@gmail.com"
         }
-        mock.form = form
-        self.assertRaises(app.InvalidFormError, app.check_form_values)
+        self.assertRaises(app.InvalidFormError, app.check_form_values, form)
 
         form = {
             "to": "test@gmail.com",
@@ -19,8 +18,7 @@ class TestFlaskApp(unittest.TestCase):
             "subject": "thisi s a test",
             "text": "text"
         }
-        mock.form = form
-        self.assertEqual(app.check_form_values(), None)
+        self.assertEqual(app.check_form_values(form), None)
 
     @patch("app.request")
     @patch("app.check_form_values")

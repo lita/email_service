@@ -9,9 +9,11 @@ from services import EmailServiceResponseException
 class TestTasks(unittest.TestCase):
     def setUp(self):
         tasks.app.conf.CELERY_ALWAYS_EAGER = True
+        tasks.app.conf.CELERY_EAGER_PROPAGATES_EXCEPTIONS = True
 
     def tearDown(self):
         tasks.app.conf.CELERY_ALWAYS_EAGER = False
+        tasks.app.conf.CELERY_EAGER_PROPAGATES_EXCEPTIONS = False
 
     def test_send_email_validation(self):
         form = {
@@ -46,7 +48,6 @@ class TestTasks(unittest.TestCase):
         emails, errors = tasks.validate_emails(good_email)
         self.assertItemsEqual(emails, ["hello@hey.com"])
         self.assertEquals(errors, [])
-
 
     @patch("tasks.send_mail.retry")
     @patch("tasks.loader.get_random_email_service")
