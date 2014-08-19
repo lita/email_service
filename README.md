@@ -70,7 +70,7 @@ If you want to run it in production, you should run it with gunicorn.
 All you need to do is make a post request to the following url.
 `http://mail.litacho.com/email/api/1.0/send`
 
-You must send it with the following data or else your email won't send:
+You must send it with the following names or else your email won't send:
 - `to`: Sender's email
 - `from_email`: Recipient's email
 - `subject`: Subject
