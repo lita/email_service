@@ -34,36 +34,39 @@ I was not familiar with Heroku, Celery or the email APIs before this project. I 
 
 2. Start up RabbitMQ and Redis.
 
-3. Set your environment variables.
+3. You have to set your environment variables before launching the web application.
 
-```python
-# Mandrill API
-MANDRILL_API_URL=[your API url]
-MANDRILL_API_KEY=[your API key]
+  ```
+  # Mandrill API
+  MANDRILL_API_URL=[your API url]
+  MANDRILL_API_KEY=[your API key]
 
-# Mailgun API
-MAILGUN_API_URL=https://api.mailgun.net/v2
-MAILGUN_API_KEY=[your API key]
-MAILGUN_DOMAIN=[your domain name registerd with Mailgun]
+  # Mailgun API
+  MAILGUN_API_URL=https://api.mailgun.net/v2
+  MAILGUN_API_KEY=[your API key]
+  MAILGUN_DOMAIN=[your domain name registerd with Mailgun]
 
-# RabbitMQ and Redis. This assume you are running them locally.
-CLOUDAMQP_URL=amqp://guest@localhost/
-REDISTOGO_URL=redis://localhost:6379/0
-```
+  # RabbitMQ and Redis. This assume you are running them locally.
+  CLOUDAMQP_URL=amqp://guest@localhost/
+  REDISTOGO_URL=redis://localhost:6379/0
+  ```
 
-4. Now you need to launch celery and flask, and you should be good to go!
-```
-$ celery -A tasks worker --loglevel=info
-```
+4. Here are the commands to launch `celery` and `flask` app!
 
-Then run the Flask app!
-```
-$ python app.py
-```
+  ```
+  $ celery -A tasks worker --loglevel=info
+  ```
 
-If you want to run it in production, you should run it with gunicorn.
+  Then run the Flask app!
 
-`$ gunicorn app:app --log-file=-`
+  ```
+  $ python app.py
+  ```
+
+  If you want to run it in production, you should run it with gunicorn.
+
+  `$ gunicorn app:app --log-file=-`
+
 
 5. If you are using foreman, you can store your environment variables in your virtual environment and run `foreman start`. This project has a Procfile all set up for you.
 
