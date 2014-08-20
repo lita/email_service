@@ -6,9 +6,8 @@ Developers can subclass the BaseService class to add their own custom
 interfaces, and the 'loader' module will be able to detect them, as long as
 they live within the 'services' module and they are just one '.py' file.
 
-Developers can use the 'config' file to store their configuration files
-and import them when needed. Feel free to look 'mandrill' and 'mailbox' as
-examples.
+Developers can store global settings in the environment variables. 
+Feel free to look 'mandrill' and 'mailbox' as examples.
 """
 
 class BaseService:
